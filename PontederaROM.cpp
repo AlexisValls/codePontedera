@@ -9,6 +9,13 @@
 
 int main(int argc, char* argv[])
 {
+    // Args
+    autoPtr<argList> args = autoPtr<argList> (new argList(argc, argv));
+    if (!args->checkRootCase())
+    {
+        Foam::FatalError.exit();
+    }
+
     // Time
     Foam::Time time(Foam::Time::controlDictName, (fileName) ".", (fileName) "."); // two last arguments stand respectively for root path and casename -> change casename later on to parametrize
 
@@ -24,8 +31,11 @@ int main(int argc, char* argv[])
         )
     );
 
+    // Parameters
+    ITHACAparameters* param(ITHACAparameters::getInstance(mesh,time));
+
     // Velocity
-    volVectorField U = 
+    PtrList<volVectorField> U = 
 
     // Declaration of objects
     

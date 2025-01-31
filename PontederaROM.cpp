@@ -39,6 +39,7 @@ Description
 
 int main(int argc, char* argv[])
 {
+    ////////////////////////// Initialisation of instances //////////////////////
     // Construct the main unsteadyNS object
     unsteadyNS mainCase(argc, argv);
 
@@ -46,20 +47,26 @@ int main(int argc, char* argv[])
     ITHACAparameters* para = ITHACAparameters::getInstance(mainCase._mesh(),
                              mainCase._runTime());
 
+    /////////////////////////// Preprocessing ///////////////////////////////////
+
+
+
+    /////////////////////////// POD computation /////////////////////////////////
     // Retrieve mean field for velocity
     autoPtr<volVectorField> meanField_U;
-    //ITHACAPOD::getMeanMemoryEfficient(mainCase._U(), "ITHACAoutput/Offline/", meanField_U, false);
+    ITHACAPOD::getMeanMemoryEfficient(mainCase._U(), "ITHACAoutput/Offline/", meanField_U, false);
 
     // Retrieve mean field for pressure
     autoPtr<volScalarField> meanField_p;
-    //ITHACAPOD::getMeanMemoryEfficient(mainCase._p(), "ITHACAoutput/Offline/", meanField_p, false);
-  
+    ITHACAPOD::getMeanMemoryEfficient(mainCase._p(), "ITHACAoutput/Offline/", meanField_p, false);
+
+/*  
     // Perform POD on velocity field
     PtrList<volVectorField> modes_U;
     ITHACAPOD::getModesMemoryEfficient
     (
         mainCase._U(),
-        "/ITHACAoutput/Offline/",
+        "ITHACAoutput/Offline/",
         modes_U,
         "U",
         false,
@@ -71,7 +78,6 @@ int main(int argc, char* argv[])
     );
 
 
-/*
     // Create homogeneous basis functions for velocity
     example.computeLift(example.Ufield, example.liftfield, example.Uomfield);
     // Perform a POD decomposition for velocity and pressure

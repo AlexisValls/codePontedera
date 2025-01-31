@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 project(PontederaROM VERSION 1.0.0)
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY /root/bin_perso)
+set(binDir /root/bin_perso)
 
 add_executable(PontederaROM PontederaROM.cpp)
 
@@ -107,3 +107,6 @@ add_compile_definitions(
     WM_DP
     NoRepository
 )
+
+install(TARGETS PontederaROM DESTINATION ${binDir})
+install(PROGRAMS offlinePreprocessing.py DESTINATION ${binDir})
